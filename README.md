@@ -23,6 +23,14 @@ const stateLockTable = new aws.dynamodb.Table(`pulumi-state-lock`, {
 })
 ```
 
+Update `Pulumi.yaml` to put table info in
+
+```
+lock:
+  region: ap-southeast-2
+  table: my-table
+```
+
 ## Usage
 
 ```
