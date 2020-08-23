@@ -1,0 +1,20 @@
+{
+  "name": "pulumi-locked",
+  "version": "0.0.1",
+  "description": "Pulumi cli wrapper which uses DynamoDB for locking (useful for S3 backed state)",
+  "bin": "index.js",
+  "repository": "https://github.com/JakeGinnivan/pulumi-locked",
+  "author": "Jake Ginnivan <jake@ginnivan.net>",
+  "license": "MIT",
+  "scripts": {
+    "release": "yarn changeset publish"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.738.0",
+    "dynamodb-lock-client": "^0.7.2",
+    "execa": "^4.0.3"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.10.1"
+  }
+}
