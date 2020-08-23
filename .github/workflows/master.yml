@@ -31,15 +31,6 @@ jobs:
             - name: Install dependencies
               run: yarn install --frozen-lockfile
 
-            - name: Build packages
-              run: yarn build
-
-            - name: Lint types and code
-              run: yarn lint
-
-            - name: Run tests
-              run: yarn test
-
             - name: Create Release Pull Request or Publish to npm
               id: changesets
               uses: changesets/action@master
