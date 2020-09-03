@@ -1,5 +1,11 @@
 # pulumi-locked
 
+## 2.0.0
+
+### Major Changes
+
+- 4830320: Removed TypeScript build step
+
 ## 1.0.1
 
 ### Patch Changes
