@@ -12,15 +12,6 @@ const yaml = require('js-yaml')
 const DynamoDBLockClient = require('dynamodb-lock-client')
 
 ;(async () => {
-    // Ensure code is built
-    try {
-        await execa('yarn', ['tsc', '--build'], {
-            stdio: [process.stdin, process.stdout, process.stderr],
-        })
-    } catch (err) {
-        return
-    }
-
     const pulumiArgs = process.argv.slice(2)
 
     /** @type {any} */
