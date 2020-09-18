@@ -14,7 +14,10 @@ const DynamoDBLockClient = require('dynamodb-lock-client')
 ;(async () => {
     const pulumiArgs = process.argv.slice(2)
     const cwdArgIndex = pulumiArgs.indexOf('--cwd')
-    const cwd = cwdArgIndex === -1 ?process.cwd() : pulumiArgs[cwdArgIndex + 1]
+    const cwd = cwdArgIndex === -1 ? process.cwd() : pulumiArgs[cwdArgIndex + 1]
+
+    const stackArgIndex = pulumiArgs.indexOf('--stack')
+    let stackName = stackArgIndex === -1 ? undefined : pulumiArgs[stackArgIndex + 1]
 
     /** @type {any} */
     const doc = yaml.safeLoad(
@@ -29,11 +32,13 @@ lock:
   table: my-table`)
     }
 
-    const { stdout, exitCode } = await execa('pulumi', cwdArgIndex === -1 ? ['stack', '--show-name'] : ['stack', '--show-name', '--cwd', cwd])
-    const stackName = stdout.split(/\r?\n/)[0]
     if (!stackName) {
-        console.error('Select stack with `pulumi stack select` first')
-        process.exit(1)
+        const { stdout } = await execa('pulumi', cwdArgIndex === -1 ? ['stack', '--show-name'] : ['stack', '--show-name', '--cwd', cwd])
+        stackName = stdout.split(/\r?\n/)[0]
+        if (!stackName) {
+            console.error('Select stack with `pulumi stack select` or --stack first')
+            process.exit(1)
+        }
     }
 
     const dynamodb = new AWS.DynamoDB.DocumentClient({
@@ -71,7 +76,7 @@ lock:
     failClosedClient.acquireLock(stackName, async (error, lock) => {
         if (error) {
             console.error('error', error)
-            process.exit(exitCode)
+            process.exit(1)
         }
 
         lock.on('error', (lockError) =>
