@@ -1,5 +1,11 @@
 # pulumi-locked
 
+## 2.0.1
+
+### Patch Changes
+
+- e0bb55e: Respect --cwd for other commands
+
 ## 2.0.0
 
 ### Major Changes
