@@ -1,5 +1,11 @@
 # pulumi-locked
 
+## 2.0.2
+
+### Patch Changes
+
+- b39d654: Respect --stack argument
+
 ## 2.0.1
 
 ### Patch Changes
