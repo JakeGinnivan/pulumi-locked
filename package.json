@@ -1,6 +1,6 @@
 {
   "name": "pulumi-locked",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Pulumi cli wrapper which uses DynamoDB for locking (useful for S3 backed state)",
   "bin": "index.js",
   "repository": "https://github.com/JakeGinnivan/pulumi-locked",
