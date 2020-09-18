@@ -13,10 +13,12 @@ const DynamoDBLockClient = require('dynamodb-lock-client')
 
 ;(async () => {
     const pulumiArgs = process.argv.slice(2)
+    const cwdArgIndex = pulumiArgs.indexOf('--cwd')
+    const cwd = cwdArgIndex === -1 ?process.cwd() : pulumiArgs[cwdArgIndex + 1]
 
     /** @type {any} */
     const doc = yaml.safeLoad(
-        fs.readFileSync(path.join(process.cwd(), './Pulumi.yaml'), 'utf8'),
+        fs.readFileSync(path.join(cwd, './Pulumi.yaml'), 'utf8'),
     )
 
     if (!doc.lock || !doc.lock.region || !doc.lock.table) {
@@ -27,7 +29,7 @@ lock:
   table: my-table`)
     }
 
-    const { stdout, exitCode } = await execa('pulumi', ['stack', '--show-name'])
+    const { stdout, exitCode } = await execa('pulumi', cwdArgIndex === -1 ? ['stack', '--show-name'] : ['stack', '--show-name', '--cwd', cwd])
     const stackName = stdout.split(/\r?\n/)[0]
     if (!stackName) {
         console.error('Select stack with `pulumi stack select` first')
