@@ -72,7 +72,7 @@ lock:
     })
 
 
-    console.log(`Aquiring lock`)
+    console.log(`Acquiring lock`)
     failClosedClient.acquireLock(stackName, async (error, lock) => {
         if (error) {
             console.error('error', error)
@@ -83,7 +83,7 @@ lock:
             console.error('failed to heartbeat!', lockError),
         )
 
-        console.log(`Aquired lock`)
+        console.log(`Acquired lock`)
         let pulumiExitCode = 0
 
         process.once('SIGINT', () => {
